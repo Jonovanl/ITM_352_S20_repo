@@ -1,0 +1,14 @@
+body{
+    width: 800px; margin: 0 auto;
+    
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+
+h1, h2{
+    margin-left: 300px;
+    margin-right: 300px;
+}
