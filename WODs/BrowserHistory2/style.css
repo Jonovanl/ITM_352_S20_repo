@@ -3,9 +3,9 @@ h1, h2 {
 }
 
 body{
-    color: Darkblue;
-    font-family:'Open Sans', sans;
-    margin: 10px 50px 10px 50px;
+    color: darkblue;
+    font-family: 'Open Sans', sans;
+    margin: 10px 50px 10px 50px
     width: 950px;
     background-color: Ivory;
 }
