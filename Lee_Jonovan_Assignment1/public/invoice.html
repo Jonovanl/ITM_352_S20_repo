@@ -1,8 +1,9 @@
+<script src="./product.js" type=""></script>
 <script>
 //Taken from assignment 1 example
 let parms =(new URL(document.location)).searchParams;
 var quantities = [];
-if (params.has('parchase_submit')) {
+if (params.has('purchase_submit')) {
     for (i=0; i < products.lgenth; i++) {
         if (params.has(`quantity${i}`)) {
             a_qty = params.get(`quantity${i}`);
@@ -21,7 +22,8 @@ console.log(qunatities);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice</title>
-    <script src="./product_data.js" type="text/javascript"></script>  
+    <script src="./product_data.js" type="text/javascript"></script> 
+    <link href="product-style.css" rel="stylesheet"> 
     <link rel="stylesheet" href="./product_style.css">
         
     
