@@ -1,62 +1,39 @@
 <!--Author: Jonovan Lee-->
 <!--File Description: Login Page-->
-<script>
-    let paras = (new URL(document.location)).searchParams;
-    if (params.has("LoginError")){//Errors in query
-        window.onload = function(){//page load
-            loginError = params.get("LoginError");//defines loginerror
-            wrongPass = '<font>Incorrect Password</font>';//error message for when there is a wrongpass
-            notReg = params.get("LoginError");//gets login error and assign it into variable notreg
-            if(loginError == wrongpass){
-                document.getElementById("passwordlabel").innerhtml = loginError;//display password error
-                loginError = '';//reset login error on page refresh
-            }
-            if (loginError == notReg){//if the login error equals the same error stored in the variable
-                document.getElementById("usernamelabel").innerHTML =loginError;//displays username error in the username label
-                loginError = '';//reset login error on page refresh
-            }
-            if(params.has("logStickInput")){//if jas iser input from query
-                stickTheInput = params.get("logStickInput");//assigns to log to variable
-                document.getElementById("userBox").value = stickTheInput;// sets the value of the input box to equal what was entered
-                loginError = '';//resets login error on page refresh
-            }
-        }
-    }
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        window.onload = function() {
+            if (params.has('LogError')){
+                aler('Invalid Username or Password');
+            }
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login Page</title>
+    <link rel="stylesheet" href="product-style.css">
 </head>
 <body>
-    <form name="loginName" class="login-form" method=POST>
-        <h1> Login</h1>
-        <div class ="txtb">
-            <input id="userBox" type="text" name="username" onchange="javascript:this.value = this.value.toLowerCase();" required>
-            <!--Username becomes case-sensitive-->
-            <span data-placeholder="Username"></span>
-        </div>
-        <div id="usernamelabel"></div>
-        <div class="txtb">
-            <input type="password" name="password" required>
-            <span data-placeholder="Password"></span>
-        </div>
-        <div id="passwordlabel"></div>
-        <br>
-        <input name="login_submit_button" type="submit" class="logbtn" value="Login">
-
-        <div class="bpttom-text">
-            You don't have an account
-            <a id="registrationpage"><button type="button" class="regButton"></button></a>
+    <h1>Sweet Shop Login Page!</h1>
+    <p>To make a purchase you must <br> login or register as a member</p>
+    <form name="login" method="POST">
+        <div class="container">
+            <input type="text" name="username" id="username" size="40" placeholder="Enter Username" required><br />
+            <input type="password" name="password" size="40" placeholder="Enter Password" onkeyup="" required><br />
+            <input type="submit" value="Login" name="login"><br />
         </div>
     </form>
-
+    <script>
+        login.action ="./login.html" + document.location.search;
+    </script>
+</body>
+<h2>Register Here!</h2>
+<body>
+    <input type="button" name="newuser" value="New User"
+    onclick="window.location='./register.html' + document.location.search;">
 </body>
 </html>
-
-<script>
-    registrationpage.href = "register_display.html" + document.location.search;
-    loginName.action = "./login_form" + document.location.search;
-</script>

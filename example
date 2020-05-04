@@ -1,0 +1,62 @@
+<!--Author: Jonovan Lee-->
+<!--File Description: Login Page-->
+<script>
+    let paras = (new URL(document.location)).searchParams;
+    if (params.has("LoginError")){//Errors in query
+        window.onload = function(){//page load
+            loginError = params.get("LoginError");//defines loginerror
+            wrongPass = '<font>Incorrect Password</font>';//error message for when there is a wrongpass
+            notReg = params.get("LoginError");//gets login error and assign it into variable notreg
+            if(loginError == wrongpass){
+                document.getElementById("passwordlabel").innerhtml = loginError;//display password error
+                loginError = '';//reset login error on page refresh
+            }
+            if (loginError == notReg){//if the login error equals the same error stored in the variable
+                document.getElementById("usernamelabel").innerHTML =loginError;//displays username error in the username label
+                loginError = '';//reset login error on page refresh
+            }
+            if(params.has("logStickInput")){//if jas iser input from query
+                stickTheInput = params.get("logStickInput");//assigns to log to variable
+                document.getElementById("userBox").value = stickTheInput;// sets the value of the input box to equal what was entered
+                loginError = '';//resets login error on page refresh
+            }
+        }
+    }
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    <form name="loginName" class="login-form" method=POST>
+        <h1> Login</h1>
+        <div class ="txtb">
+            <input id="userBox" type="text" name="username" onchange="javascript:this.value = this.value.toLowerCase();" required>
+            <!--Username becomes case-sensitive-->
+            <span data-placeholder="Username"></span>
+        </div>
+        <div id="usernamelabel"></div>
+        <div class="txtb">
+            <input type="password" name="password" required>
+            <span data-placeholder="Password"></span>
+        </div>
+        <div id="passwordlabel"></div>
+        <br>
+        <input name="login_submit_button" type="submit" class="logbtn" value="Login">
+
+        <div class="bpttom-text">
+            You don't have an account
+            <a id="registrationpage"><button type="button" class="regButton"></button></a>
+        </div>
+    </form>
+
+</body>
+</html>
+
+<script>
+    registrationpage.href = "register_display.html" + document.location.search;
+    loginName.action = "./login_form" + document.location.search;
+</script>

@@ -1,8 +1,10 @@
+//Author: Jonovan Lee//
+//File Description: Server//
 var fs = reqiure('fs');
 const querystring = require('querystring');
-const product = require('./public/product');
-var express = require('express');
-var app = express();
+const product = require('./public/product');//gets data from product.js
+var express = require('express');//requires express to run
+var app = express();//run express function and start express
 var myParser = require('body-parser');
 
 app.use(myParser.urlencoded({extended: true}));
@@ -10,7 +12,7 @@ app.use(myParser.urlencoded({extended: true}));
 var filename = 'user_data.json'
 
 if (fs.existSync(filename)) {
-    stats = fs.statsync(filename)
+    stats = fs.statsync(filename) //gets data from file
     console.log(filename + 'has' + stats.size + 'characters');
 
     data = fs.readfileSync(filename, 'utf-8');
@@ -18,12 +20,13 @@ if (fs.existSync(filename)) {
     } else {
         console.log(filename + 'does not exist');
     }
-
+    // go to invoice if quantity values are good, if not, redirect back to order page
     app.post("/login.html", function (req, res){
         var LogError = [];
         console.log(req.body);
         the_username = req.body.username.toLowerCase();
         if (typeof users_reg_data[the_username]!= 'undefined'){
+            //asks object if it has a matching user name, if not it goes undefined
             if (users_reg_data[the_username].password == req.body.password){
                 req.query.username = username;
                 console.log(users_reg_data[req.query.username].name);
@@ -116,19 +119,19 @@ if (fs.existSync(filename)) {
             }
             console.log(hasValidQuantities, numPurchases);
         }
-        qString = querystring.stringify(GET);
-        if (hasValidQuantities == true && numPurchases == true) {
-            res.redirect('./login.html' + querystring.stringify(req.query));
+        qString = querystring.stringify(GET);//strings query 
+        if (hasValidQuantities == true && numPurchases == true) {//want both quantities and purchases number to be true
+            res.redirect('./login.html' + querystring.stringify(req.query));//redirect to the invoice page with the query entered in the form
         }
         else {
-            req.query["hasValidQuantities"] = hasValidQuantities;
-            req.query["hasPurchases"] = numPurchases;
-            console.log(req.query);
-            res.redirect('./login.html?' + query.stringify(req.query));
+            req.query["hasValidQuantities"] = hasValidQuantities;// if they are false
+            req.query["hasPurchases"] = numPurchases;//request the query for haspurchases
+            console.log(req.query);//log the query in the console
+            res.redirect('./login.html?' + query.stringify(req.query));//redirect to form
         }
     });
 
-    app.use(express.static('./public'));
+    app.use(express.static('./public'));//creates a static server using express from the public folder
 
     var listener = app.listen(8080,() => {console.log(`listening on port` + listener.address().port)});
     
