@@ -4,26 +4,26 @@
 <script>
 //Code used above does a get request for the product's list
 //Taken from assignment 1 example
-let parms =(new URL(document.location)).searchParams;
+let parms =(new URL(document.location)).searchParams;//searches for parameters in new location
 
 //processes the invoice to create form using data entered
-if (params.has('SubmitPurchase')) {
+if (params.has('SubmitPurchase')) {//if submitted parameters in new url location
 }
 else {
-    alert('Please Log in');
+    alert('Please Log in');//warns you need to login
     window.location = 'login';
     window.stop();
 }
-var quantities = [];
-if (params.has('submitPurchase')){
-    for (i = 0; i < products.length; i++){
+var quantities = [];//creates a quantity variable
+if (params.has('submitPurchase')){//process invoice
+    for (i = 0; i < products.length; i++){// for loop generates length of product from products.js
         if(params.has(`quantity${i}`)) {
         a_qty = params.get(`quantity${i}`);
         quantities[i] = a_qty;
         }
     }
 } else {
-    document.write('Please submit a valid quantity!');
+    document.write('Please submit a valid quantity!');// if everything above was false it ask for user to submit a valid quantity
 }
 console.log(qunatities);
 </script>

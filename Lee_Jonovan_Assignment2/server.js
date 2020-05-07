@@ -1,25 +1,24 @@
 //Author: Jonovan Lee//
 //File Description: Server//
-var fs = reqiure('fs');
+var fs = require('fs');
 const querystring = require('querystring');
-const product = require('./public/product');//gets data from product.js
+const product_data = require('./public/product.js').products;//gets data from product.js
 var express = require('express');//requires express to run
-var app = express();//run express function and start express
-var myParser = require('body-parser');
+var app = express();//creates variable to start up express
+var myParser = require('body-parser');//creates a variable to require body parser
 
 app.use(myParser.urlencoded({extended: true}));
 
 var filename = 'user_data.json'
 
-if (fs.existSync(filename)) {
-    stats = fs.statsync(filename) //gets data from file
-    console.log(filename + 'has' + stats.size + 'characters');
-
-    data = fs.readfileSync(filename, 'utf-8');
+if (fs.existsSync(filename)) {
+    
+    data = fs.readFileSync(filename, 'utf-8');
     user_reg_data = JSON.parse(data);
     } else {
         console.log(filename + 'does not exist');
     }
+    //grabbed from lab 14 with port's help in class
     // go to invoice if quantity values are good, if not, redirect back to order page
     app.post("/login.html", function (req, res){
         var LogError = [];
@@ -103,14 +102,15 @@ if (fs.existSync(filename)) {
         }
     });
 
-    app.get("/purchase", function (req, res, next) {
+    app.post("/purchase", function (req, res, next) {//data from form will become purchase
         //checks for the correct quantities
-        let GET = req.query;
-        console.log(GET);
-        var hasValidQuantities = true;
-        var numPurchases = false;
-        for (i = 0; i < product_data.length; i++){
-            q = GET['quantity_textbox' +i];
+        let POST = req.body;//hold contens of the body
+        var hasValidQuantities = true;// makes hasValidQuantities true
+        var numPurchases = false; //makes numPurchases false
+        console.log(product_data);//console shows what product data is
+        for (i = 0; i < product_data.length; i++){//for loop makes products 1
+            q = POST['quantity' +i];//assigns q to variable of quantity submitted from the user by the form
+            console.log(q);
             if(isNonNegInt(q) == false ) {
                 hasValidQuantities = false;
             }
@@ -118,16 +118,16 @@ if (fs.existSync(filename)) {
                 numPurchases = true;
             }
             console.log(hasValidQuantities, numPurchases);
-        }
-        qString = querystring.stringify(GET);//strings query 
+        } 
         if (hasValidQuantities == true && numPurchases == true) {//want both quantities and purchases number to be true
-            res.redirect('./login.html' + querystring.stringify(req.query));//redirect to the invoice page with the query entered in the form
+            res.redirect('./login.html?' + querystring.stringify(POST));//redirect to the invoice page with the query entered in the form
         }
         else {
+            req.query = POST;
             req.query["hasValidQuantities"] = hasValidQuantities;// if they are false
             req.query["hasPurchases"] = numPurchases;//request the query for haspurchases
             console.log(req.query);//log the query in the console
-            res.redirect('./login.html?' + query.stringify(req.query));//redirect to form
+            res.redirect('./index.html?' + querystring.stringify(req.query));//redirect to form
         }
     });
 
@@ -139,6 +139,8 @@ if (fs.existSync(filename)) {
         errs_array = isNonNegInt(quantity_textbox.value, true);
         qty_textbox_message.innerHTML = errs_array.join(';');
     }
+    //Used from assignment 1 example
+    //checks if string is a non-negative integer
     function isNonNegInt(q, returnErrors = false) {
         errors = [];
         if(q==  '') q = 0;
